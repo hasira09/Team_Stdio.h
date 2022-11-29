@@ -1,51 +1,30 @@
-from kivy.core.text import LabelBase
+from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager
 from kivymd.app import MDApp
 
-Window.size = (310, 580)
-
-sc = """
-MDFloatLayout:
-    md_bg_color: 1,1,1,1
-    Carousel:
-        id: carousel
-        scroll_timeout:0
-        on_current_slide: app.current_slide(self.index)
-        MDFloatLayout:
-            Image:
-                source: "Images/BgImage2.jpg"
-                pos_hint: {"center_x": .4, "center_y": .5}
-                
-            MDFloatLayout:
-                Image:
-                    source: "Images/TC_Logo.png"
-                    pos_hint: {"center_x": .5, "center_y": .8}
-                    size_hint: 1, .1
-                    
-                MDFloatLayout:    
-                    Image:
-                        source: "Images/Intro_T.png"
-                        pos_hint: {"center_x": .5, "center_y": .67}
-                        size_hint: 1, .1
-                        
-                    
-                                        
-"""
+Window.size = (350, 600)
 
 
 class TourCeylon(MDApp):
+    global screen_manager
+    screen_manager = ScreenManager()
 
     def build(self):
-        return Builder.load_string(sc)
+        self.title = "Tour-Ceylon"
+        self.theme_cls.primary_palette = 'BlueGray'
 
-    def current_slide(self, index):
-        pass
+        screen_manager.add_widget(Builder.load_file("splashs.kv"))
+        screen_manager.add_widget(Builder.load_file("mainscreen.kv"))
 
+        return screen_manager
 
-if __name__ == "__main__":
-    LabelBase.register(name="Inter", fn_regular="E:\PyCharm_Projects\SplashScren\FONTS\static\Inter-Regular.ttf")
+    def on_start(self):
+        Clock.schedule_once(self.change_screen, 10)
 
-    LabelBase.register(name="Inter", fn_regular="E:\PyCharm_Projects\SplashScren\FONTS\static\Inter-Bold.ttf")
+    def change_screen(self, dt):
+        screen_manager.current = "MainScreen"
+
 
 TourCeylon().run()
