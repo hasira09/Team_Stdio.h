@@ -4,6 +4,21 @@ MDScreen:
 
     FloatLayout:
         Image:
+            source:'Images/Splash_1.avi'
+            allow_stretch: True
+            anim_delay: 0
+            anim_reset: True
+
+        BoxLayout:
+            pos_hint:{'center_y':.3, 'center_x':.5}
+            padding:"10dp"
+            size_hint_x:.6
+MDScreen:
+    name: "SplashScreen"
+    on_enter: self.ids.progress.start()
+
+    FloatLayout:
+        Image:
             source:'Images/TC_Logo.png'
             allow_stretch: True
             anim_delay: 0
